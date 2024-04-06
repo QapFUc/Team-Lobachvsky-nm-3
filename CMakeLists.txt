@@ -73,3 +73,5 @@ if(QT_VERSION_MAJOR EQUAL 6)
 endif()
 
 target_include_directories(client-gui.out PRIVATE Client/gui)
+
+add_subdirectory(src)
