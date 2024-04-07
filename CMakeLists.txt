@@ -11,7 +11,11 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets WaylandCompositor)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets WaylandCompositor)
+option(NO_GUI "specify to build w/o gui part" OFF)
+
+if(NOT ${NO_GUI})
+    find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets WaylandCompositor)
+    find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets WaylandCompositor)
+endif()
 
 add_subdirectory(src)
