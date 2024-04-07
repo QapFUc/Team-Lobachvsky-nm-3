@@ -1,6 +1,6 @@
 set(TARGET_NAME "nm_logger")
 
-file(GLOB_RECURSE SRCS "*.(c|h)pp")
+file(GLOB_RECURSE SRCS "*.[c|h]pp")
 
 add_library(${TARGET_NAME} STATIC ${SRCS})
 add_library(nm::logger ALIAS ${TARGET_NAME})

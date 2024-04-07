@@ -1,6 +1,6 @@
 set(TARGET_NAME "nm_spline_core")
 
-file(GLOB_RECURSE SRCS "*.(c|h)pp")
+file(GLOB_RECURSE SRCS "*.[c|h]pp")
 
 add_library(${TARGET_NAME} STATIC ${SRCS})
 add_library(spline::core ALIAS ${TARGET_NAME})
