@@ -87,22 +87,7 @@ struct ProfData {
     Timer time;
     Scope scope;
     size_t depth = 0;
-
-    // ProfData() = default;
-
-    // ProfData(const ProfData& pd) {
-    //     time = pd.time;
-    //     scope = pd.scope;
-    //     depth = pd.depth;
-    // }
-
-    // ProfData& operator=(const ProfData& pd) {
-    //     time = pd.time;
-    //     scope = pd.scope;
-    //     depth = pd.depth;
-
-    //     return *this;  
-    // }
+    
     friend std::ostream& operator<<(std::ostream& os, const ProfData data) {
         std::string indent = "";
         for (int i = 0; i < data.depth; i++) {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "dataTypes/common.hpp"
+#include "nm/utils/profiler.hpp"
 
 // Tridiagonal matrix algorithm
 // A - pointer to tridiagonal matrix data
@@ -8,4 +9,5 @@
 // syste, matrix
 // F - pointer to RHS of linear systrm
 // X - pointer to variable to find 
-nm::Status ProcessTMA(const double* A, const double* F, double* X);
+// returns only nm::Status::Failure or nm::Status::Success
+nm::Status ProcessTMA(const double* A, const double* F, double* X, nm::Profiler& prof);

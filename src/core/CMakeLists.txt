@@ -8,6 +8,7 @@ add_library(spline::core ALIAS ${TARGET_NAME})
 target_link_libraries(${TARGET_NAME} PRIVATE 
     nm::logger
     spline::dtypes
+    nm::prof
 )
 
 target_include_directories(${TARGET_NAME} PUBLIC
