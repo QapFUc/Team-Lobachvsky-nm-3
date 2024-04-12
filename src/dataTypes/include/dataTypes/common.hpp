@@ -13,4 +13,9 @@ enum struct ElemType {
     fp64
 };
 } // namespace dtypes
+
+enum struct Status {
+    Failure = 0,
+    Success = 1
+};
 } // namespace nm
