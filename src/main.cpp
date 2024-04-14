@@ -21,7 +21,7 @@ double testKernel(const double& a, nm::Timer& t, nm::Profiler& prof) {
 
 	return res;
 }
-void testMyFunc(const double *A, const double *F, double *X, const int n,nm::Profiler& prof) {
+void testMyFunc( double *A,  double *F, double *X, const int n,nm::Profiler& prof) {
 	nm::Profiler p{ prof.nest(nm::GET_CURRENT_SCOPE())};
 	nm::Status func = ProcessTMA(A,F,X,n,p);
 }
@@ -52,12 +52,13 @@ int main(int argc, char* argv[]) {
 	double coeffs[5][3] = {{0.0,2.0,3.0},{1.0,2.0,3.0},{1.0,2.0,3.0},{1.0,2.0,3.0},{1.0,2.0,0.0}}; 
 	double X_1[5];
 	double X_2[5];
-	double RHS[] = {5,6,7,8,9};
+	double RHS_1[] = {5,6,7,8,9};
+	double RHS_2[] = {5,6,7,8,9};
 	double result_A[] = {0.0,2.0,3.0,1.0,2.0,3.0,1.0,2.0,3.0,1.0,2.0,3.0,1.0,2.0,0.0};
 	std::cout << "MyFunc start" << '\n';
-	testMyFunc(result_A,RHS,X_1,5,prof);
+	testMyFunc(result_A,RHS_1,X_1,5,prof);
 	std::cout << "RefFunc start" << '\n';
-	testRefFunc(coeffs,RHS,X_2,5,prof);
+	testRefFunc(coeffs,RHS_2,X_2,5,prof);
 	std::cout << "kernel passed" << '\n';
 	auto profdata = prof.getAllData();
 	std::cout << "Profiling data" << '\n';
