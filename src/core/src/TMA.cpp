@@ -3,6 +3,7 @@
 #include "nm/utils/profiler.hpp"
 
 nm::Status ProcessTMA(double *A, double *F, double *X, const int &n, nm::Profiler& prof) {
+    nm::Profiler p{ prof.nest(nm::GET_CURRENT_SCOPE())};
     double mult;
     for (size_t i = 1; i < n; ++i) {
         mult = A[i * 3] / A[(i - 1) * 3 + 1];
