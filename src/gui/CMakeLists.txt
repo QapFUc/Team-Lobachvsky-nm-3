@@ -19,6 +19,6 @@ if(${MAC})
     target_link_libraries(gui.out PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 endif()
 
-if(NOt ${X11} and NOT ${MAC})
+if(NOT ${X11} AND NOT ${MAC})
     target_link_libraries(gui.out PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::WaylandCompositor)
 endif()
