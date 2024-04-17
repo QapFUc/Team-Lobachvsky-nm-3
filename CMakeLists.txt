@@ -12,6 +12,8 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 option(NO_GUI "specify to build w/o gui part" OFF)
+option(X11 "Use this option if you have X11" OFF)
+option(MAC "Use this option if you have MAC"  OFF)
 
 
 if(${X11})
