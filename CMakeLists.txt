@@ -13,9 +13,20 @@ set(CMAKE_AUTORCC ON)
 
 option(NO_GUI "specify to build w/o gui part" OFF)
 
-if(NOT ${NO_GUI})
-    find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets WaylandCompositor)
-    find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets WaylandCompositor)
+
+if(${X11})
+    find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets )
+    find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets )
+endif()
+
+if(${MAC})
+    find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets )
+    find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets )
+endif()
+
+if(NOT ${X11} AND NOT ${MAC})
+    find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets WaylandCompositor )
+    find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets WaylandCompositor )
 endif()
 
 add_subdirectory(src)
