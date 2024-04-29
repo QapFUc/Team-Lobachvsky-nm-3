@@ -4,9 +4,13 @@
 #include <QWidget>
 #include <QGuiApplication>
 #include <QScreen>
+#include <QTabWidget>
+#include <QLabel>
+#include <QLayout>
+#include <QMenuBar>
+
 
 #include <signal.h>
-
 
 
 class Widget :  public QWidget
