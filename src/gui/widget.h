@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QLayout>
 #include <QMenuBar>
+#include <QTableWidget>
 
 
 #include <signal.h>

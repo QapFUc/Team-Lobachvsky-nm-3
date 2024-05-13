@@ -55,6 +55,82 @@ Widget::Widget(QWidget *parent)
 
     tab3->setLayout(new QVBoxLayout());
     tab3->layout()->addWidget(label3);
+
+    // table for 1 page.
+    QTableWidget *table_1 = new QTableWidget(5, 6, tab1);
+        
+    for (int row = 0; row < 5; ++row) {
+        for (int col = 0; col < 6; ++col) {
+            QTableWidgetItem *item = new QTableWidgetItem(QString("%1").arg(row * 7 + col + 1));
+            table_1->setItem(row, col, item);
+        }
+    }
+
+    for (int col = 0; col < 6; ++col) {
+    QTableWidgetItem *headerItem = new QTableWidgetItem();
+    if (col == 0) {
+        headerItem->setText("x(i-1)");
+    } 
+    if (col == 1) {
+        headerItem->setText("x(i)");
+    } 
+    if (col == 2) {
+        headerItem->setText("a(i)");
+    } 
+    if (col == 3) {
+        headerItem->setText("b(i)");
+    } 
+    if (col == 4) {
+        headerItem->setText("c(i)");
+    } 
+    if (col == 5) {
+        headerItem->setText("d(i)");
+    } 
+    table_1->setHorizontalHeaderItem(col, headerItem);
+}
+
+    tab1->layout()->addWidget(table_1);
+    // table 1 is done.
+
+    // table for 2 page.
+    QTableWidget *table_2 = new QTableWidget(5, 7, tab2);
+        
+    for (int row = 0; row < 5; ++row) {
+        for (int col = 0; col < 7; ++col) {
+            QTableWidgetItem *item = new QTableWidgetItem(QString("%1").arg(row * 7 + col + 1));
+            table_2->setItem(row, col, item);
+        }
+    }
+
+    for (int col = 0; col < 7; ++col) {
+    QTableWidgetItem *headerItem = new QTableWidgetItem();
+    if (col == 0) {
+        headerItem->setText("x(j)");
+    } 
+    if (col == 1) {
+        headerItem->setText("F(x_j)");
+    } 
+    if (col == 2) {
+        headerItem->setText("S(x_j)");
+    } 
+    if (col == 3) {
+        headerItem->setText("F(x_j) - S(x_j)");
+    } 
+    if (col == 4) {
+        headerItem->setText("F'(x_j)");
+    } 
+    if (col == 5) {
+        headerItem->setText("S'(x_j)");
+    } 
+    if (col == 6) {
+        headerItem->setText("F'(x_j) - S'(x_j)");
+    } 
+    table_2->setHorizontalHeaderItem(col, headerItem);
+}
+
+    tab2->layout()->addWidget(table_2);
+    // table 2 is done.
+
 }
 
 Widget::~Widget()
