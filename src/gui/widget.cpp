@@ -1,5 +1,8 @@
 #include "widget.h"
 
+#include <QtWidgets>
+#include <QtCharts>
+
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
 {
@@ -37,9 +40,9 @@ Widget::Widget(QWidget *parent)
     QWidget *tab2 = new QWidget();
     QWidget *tab3 = new QWidget();
 
-    tabWidget->addTab(tab1, tr("Вкладка 1"));
-    tabWidget->addTab(tab2, tr("Вкладка 2"));
-    tabWidget->addTab(tab3, tr("Вкладка 3"));
+    tabWidget->addTab(tab1, tr("Таблица 1"));
+    tabWidget->addTab(tab2, tr("Таблица 2"));
+    tabWidget->addTab(tab3, tr("Справка"));
 
 
     QLabel *label1 = new QLabel("Контент Вкладки 1", tab1);
@@ -65,6 +68,13 @@ Widget::Widget(QWidget *parent)
             table_1->setItem(row, col, item);
         }
     }
+
+    // for (int k = 0; k < 6; k++){
+    //     table_1->setColumnWidth(k, this->width()/6);
+    // }
+    
+    table_1->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
 
     for (int col = 0; col < 6; ++col) {
     QTableWidgetItem *headerItem = new QTableWidgetItem();
@@ -102,6 +112,12 @@ Widget::Widget(QWidget *parent)
         }
     }
 
+    // for (int i = 0; i < 7; i++){
+    //     table_2->setColumnWidth(i, this->width()/7);
+    // }
+
+    table_2->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
     for (int col = 0; col < 7; ++col) {
     QTableWidgetItem *headerItem = new QTableWidgetItem();
     if (col == 0) {
@@ -126,11 +142,37 @@ Widget::Widget(QWidget *parent)
         headerItem->setText("F'(x_j) - S'(x_j)");
     } 
     table_2->setHorizontalHeaderItem(col, headerItem);
-}
+    }
 
     tab2->layout()->addWidget(table_2);
     // table 2 is done.
 
+    // widget 3 
+    QWidget *tab3GraphWidget = new QWidget();
+
+    QChartView *chartView = new QChartView(tab3GraphWidget);
+    chartView->setRenderHint(QPainter::Antialiasing);
+
+    QChart *chart = new QChart();
+
+    QLineSeries *series = new QLineSeries();
+    series->append(0, 6);
+    series->append(2, 4);
+    series->append(3, 8);
+    series->append(7, 4);
+    series->append(10, 5);
+    chart->addSeries(series);
+
+    chart->setTitle("Пример графика");
+
+    chart->createDefaultAxes();
+
+    chartView->setChart(chart);
+
+    tab3GraphWidget->setLayout(new QVBoxLayout());
+    tab3GraphWidget->layout()->addWidget(chartView);
+
+    tabWidget->addTab(tab3GraphWidget, tr("График"));
 }
 
 Widget::~Widget()
