@@ -23,9 +23,9 @@ public:
     ~Widget();
 
 private:
-    void CreateTable1(QWidget *parent);
-    void CreateTable2(QWidget *parent);
-    void CreateGraphs(QWidget *parent);
+    void CreateTable1();
+    void CreateTable2();
+    void CreateGraphs();
     QTabWidget *tabWidget;
     QWidget *tab1;
     QWidget *tab2;

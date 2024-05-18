@@ -2,6 +2,7 @@
 
 #include <QtWidgets>
 #include <QtCharts>
+#include <qwidget.h>
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -36,14 +37,16 @@ Widget::Widget(QWidget *parent)
     tabWidget->resize(mainWindowWidth*0.9, mainWindowHeight*0.9);  // Размер вкладок аналогичен размеру окна
 
 
-    QWidget *tab1 = new QWidget();
-    QWidget *tab2 = new QWidget();
-    QWidget *tab3 = new QWidget();
+    tab1 = new QWidget();
+    tab2 = new QWidget();
+    tab3 = new QWidget();
+    tab4 = new QWidget();
 
 
     tabWidget->addTab(tab1, tr("Таблица 1"));
     tabWidget->addTab(tab2, tr("Таблица 2"));
-    tabWidget->addTab(tab3, tr("Справка"));
+    tabWidget->addTab(tab3, tr("График"));
+    tabWidget->addTab(tab4, tr("Справка"));
 
 
     QLabel *label1 = new QLabel("Контент Вкладки 1", tab1);
@@ -51,19 +54,19 @@ Widget::Widget(QWidget *parent)
     QLabel *label3 = new QLabel("Контент Вкладки 3", tab3);
 
 
-    tab1->setLayout(new QVBoxLayout());
+    tab1->setLayout(new QVBoxLayout());//WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     tab1->layout()->addWidget(label1);
 
-    tab2->setLayout(new QVBoxLayout());
+    tab2->setLayout(new QVBoxLayout());//WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     tab2->layout()->addWidget(label2);
 
-    tab3->setLayout(new QVBoxLayout());
+    tab3->setLayout(new QVBoxLayout());//WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     tab3->layout()->addWidget(label3);
 
-    CreateTable1(tab1);
+    CreateTable1();
     // table 1 is done.
 
-    CreateTable2(tab2);
+    CreateTable2();
     // table 2 is done.
 
     // widget 3
@@ -79,8 +82,8 @@ Widget::~Widget()
 
 }
 
-void Widget::CreateTable1(QWidget *parent){
-    QTableWidget *table_1 = new QTableWidget(5, 6, parent);
+void Widget::CreateTable1(){
+    QTableWidget *table_1 = new QTableWidget(5, 6);
 
     for (int row = 0; row < 5; ++row) {
         for (int col = 0; col < 6; ++col) {
@@ -104,11 +107,9 @@ void Widget::CreateTable1(QWidget *parent){
         table_1->setHorizontalHeaderItem(col, headerItem);
     }
 
-    parent->setLayout(new QVBoxLayout());
-    parent->layout()->addWidget(table_1);
 }
 
-void Widget::CreateTable2(QWidget* parent) {
+void Widget::CreateTable2() {
     QTableWidget *table_2 = new QTableWidget(5, 7, tab2);
         
     for (int row = 0; row < 5; ++row) {
@@ -149,7 +150,7 @@ void Widget::CreateTable2(QWidget* parent) {
     tab2->layout()->addWidget(table_2);
 }
 
-void Widget::CreateGraphs(QWidget* parent) {
+void Widget::CreateGraphs() {
     QWidget *tab4GraphWidget = new QWidget();
 
     QChartView *chartView = new QChartView(tab4GraphWidget);
@@ -171,7 +172,7 @@ void Widget::CreateGraphs(QWidget* parent) {
 
     chartView->setChart(chart);
 
-    tab4GraphWidget->setLayout(new QVBoxLayout());
+    tab4GraphWidget->setLayout(new QVBoxLayout()); //WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     tab4GraphWidget->layout()->addWidget(chartView);
 
     tabWidget->addTab(tab4GraphWidget, tr("График"));
