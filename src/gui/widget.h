@@ -21,5 +21,15 @@ class Widget :  public QWidget
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
+
+private:
+    void CreateTable1(QWidget *parent);
+    void CreateTable2(QWidget *parent);
+    void CreateGraphs(QWidget *parent);
+    QTabWidget *tabWidget;
+    QWidget *tab1;
+    QWidget *tab2;
+    QWidget *tab3;
+    QWidget *tab4;
 };
 #endif // WIDGET_H

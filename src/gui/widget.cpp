@@ -40,6 +40,7 @@ Widget::Widget(QWidget *parent)
     QWidget *tab2 = new QWidget();
     QWidget *tab3 = new QWidget();
 
+
     tabWidget->addTab(tab1, tr("Таблица 1"));
     tabWidget->addTab(tab2, tr("Таблица 2"));
     tabWidget->addTab(tab3, tr("Справка"));
@@ -59,9 +60,28 @@ Widget::Widget(QWidget *parent)
     tab3->setLayout(new QVBoxLayout());
     tab3->layout()->addWidget(label3);
 
-    // table for 1 page.
-    QTableWidget *table_1 = new QTableWidget(5, 6, tab1);
-        
+    CreateTable1(tab1);
+    // table 1 is done.
+
+    CreateTable2(tab2);
+    // table 2 is done.
+
+    // widget 3
+
+    // CreateGraphs(tab4);
+    // widget 4 
+
+    
+}
+
+Widget::~Widget()
+{
+
+}
+
+void Widget::CreateTable1(QWidget *parent){
+    QTableWidget *table_1 = new QTableWidget(5, 6, parent);
+
     for (int row = 0; row < 5; ++row) {
         for (int col = 0; col < 6; ++col) {
             QTableWidgetItem *item = new QTableWidgetItem(QString("%1").arg(row * 7 + col + 1));
@@ -69,40 +89,26 @@ Widget::Widget(QWidget *parent)
         }
     }
 
-    // for (int k = 0; k < 6; k++){
-    //     table_1->setColumnWidth(k, this->width()/6);
-    // }
-    
     table_1->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
-
     for (int col = 0; col < 6; ++col) {
-    QTableWidgetItem *headerItem = new QTableWidgetItem();
-    if (col == 0) {
-        headerItem->setText("x(i-1)");
-    } 
-    if (col == 1) {
-        headerItem->setText("x(i)");
-    } 
-    if (col == 2) {
-        headerItem->setText("a(i)");
-    } 
-    if (col == 3) {
-        headerItem->setText("b(i)");
-    } 
-    if (col == 4) {
-        headerItem->setText("c(i)");
-    } 
-    if (col == 5) {
-        headerItem->setText("d(i)");
-    } 
-    table_1->setHorizontalHeaderItem(col, headerItem);
+        QTableWidgetItem *headerItem = new QTableWidgetItem();
+        switch (col) {
+            case 0: headerItem->setText("x(i-1)"); break;
+            case 1: headerItem->setText("x(i)"); break;
+            case 2: headerItem->setText("a(i)"); break;
+            case 3: headerItem->setText("b(i)"); break;
+            case 4: headerItem->setText("c(i)"); break;
+            case 5: headerItem->setText("d(i)"); break;
+        }
+        table_1->setHorizontalHeaderItem(col, headerItem);
+    }
+
+    parent->setLayout(new QVBoxLayout());
+    parent->layout()->addWidget(table_1);
 }
 
-    tab1->layout()->addWidget(table_1);
-    // table 1 is done.
-
-    // table for 2 page.
+void Widget::CreateTable2(QWidget* parent) {
     QTableWidget *table_2 = new QTableWidget(5, 7, tab2);
         
     for (int row = 0; row < 5; ++row) {
@@ -111,10 +117,6 @@ Widget::Widget(QWidget *parent)
             table_2->setItem(row, col, item);
         }
     }
-
-    // for (int i = 0; i < 7; i++){
-    //     table_2->setColumnWidth(i, this->width()/7);
-    // }
 
     table_2->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
@@ -145,12 +147,12 @@ Widget::Widget(QWidget *parent)
     }
 
     tab2->layout()->addWidget(table_2);
-    // table 2 is done.
+}
 
-    // widget 3 
-    QWidget *tab3GraphWidget = new QWidget();
+void Widget::CreateGraphs(QWidget* parent) {
+    QWidget *tab4GraphWidget = new QWidget();
 
-    QChartView *chartView = new QChartView(tab3GraphWidget);
+    QChartView *chartView = new QChartView(tab4GraphWidget);
     chartView->setRenderHint(QPainter::Antialiasing);
 
     QChart *chart = new QChart();
@@ -169,14 +171,8 @@ Widget::Widget(QWidget *parent)
 
     chartView->setChart(chart);
 
-    tab3GraphWidget->setLayout(new QVBoxLayout());
-    tab3GraphWidget->layout()->addWidget(chartView);
+    tab4GraphWidget->setLayout(new QVBoxLayout());
+    tab4GraphWidget->layout()->addWidget(chartView);
 
-    tabWidget->addTab(tab3GraphWidget, tr("График"));
+    tabWidget->addTab(tab4GraphWidget, tr("График"));
 }
-
-Widget::~Widget()
-{
-
-}
-
