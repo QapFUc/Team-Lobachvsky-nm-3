@@ -4,9 +4,11 @@ set( PROJECT_SOURCES
     widget.cpp
 )
 
+
 add_executable( gui.out
                 ${PROJECT_SOURCES}
 )
+
 
 option(X11 "Use this option if you have X11" OFF)
 option(MAC "Use this option if you have MAC"  OFF)
