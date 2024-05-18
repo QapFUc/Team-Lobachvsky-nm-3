@@ -34,5 +34,6 @@ nm::Status ProcessTMA(double *A, double *F, double *X, const int &n) {
         X[i] = (F[i] - A[i * 3 + 2] * X[i + 1]) / A[i * 3 + 1];
     }
 
+
     return nm::Status::Success;
 }
