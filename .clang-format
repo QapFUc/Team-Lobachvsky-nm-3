@@ -165,5 +165,5 @@ StatementAttributeLikeMacros:
 StatementMacros:
   - Q_UNUSED
   - QT_REQUIRE_VERSION
-TabWidth: 1000
+TabWidth: 4
 UseCRLF: false
