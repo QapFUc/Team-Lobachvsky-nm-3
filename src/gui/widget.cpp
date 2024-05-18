@@ -31,7 +31,8 @@ Widget::Widget(QWidget* parent) : QWidget(parent) {
 
     QTabWidget* tabWidget = new QTabWidget(this);
     mainlayout->addWidget(tabWidget);
-    tabWidget->resize(mainWindowWidth * 0.9, mainWindowHeight * 0.9);  // Размер вкладок аналогичен размеру окна
+    tabWidget->resize(mainWindowWidth * 0.9,
+                      mainWindowHeight * 0.9);  // Размер вкладок аналогичен размеру окна
 
     tab1 = new QWidget();
     tab2 = new QWidget();
