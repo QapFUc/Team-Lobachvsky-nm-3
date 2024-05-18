@@ -18,11 +18,11 @@ class Widget : public QWidget {
 public:
     Widget(QWidget* parent = nullptr);
     ~Widget();
-
-private:
     void CreateTable1();
     void CreateTable2();
     void CreateGraphs();
+
+private:
     QTabWidget* tabWidget;
     QWidget* tab1;
     QWidget* tab2;
