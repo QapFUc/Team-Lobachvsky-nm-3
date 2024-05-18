@@ -26,6 +26,7 @@ private:
     void CreateTable1();
     void CreateTable2();
     void CreateGraphs();
+    void CreateInfo();
     QTabWidget *tabWidget;
     QWidget *tab1;
     QWidget *tab2;
