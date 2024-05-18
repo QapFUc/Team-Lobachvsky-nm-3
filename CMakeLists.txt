@@ -7,11 +7,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-SET(CMAKE_CXX_COMPILER g++)
+
+set(CMAKE_CXX_COMPILER clang++)
+
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
+
+include(cmake/testing_util.cmake)
 
 option(NO_GUI "specify to build w/o gui part" OFF)
 
@@ -20,4 +24,7 @@ if(NOT ${NO_GUI})
     find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets WaylandCompositor)
 endif()
 
+enable_testing()
+
 add_subdirectory(src)
+add_subdirectory(tests)

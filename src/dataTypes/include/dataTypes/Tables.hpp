@@ -13,7 +13,7 @@ class Table {
 public:
     Table() = default;
 
-    template<std::size_t Column>
+    template <std::size_t Column>
     typename std::tuple_element<Column, std::tuple<T...>>::type& get(const size_t& row) {
         return std::get<Column>(tablev[row]);
     }
@@ -21,6 +21,7 @@ public:
     void addRow(T&&... args) {
         tablev.push_back(std::tuple<T...>(std::forward<T>(args)...));
     }
+
 private:
     std::vector<std::tuple<T...>> tablev;
 };
