@@ -7,7 +7,7 @@
 #include <vector>
 
 double func(const double& x) {
-    return std::exp(x - 1) * (x - 2);
+    return (std::log(x+1))/x;
 }
 
 int main() {
