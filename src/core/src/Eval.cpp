@@ -26,11 +26,12 @@ CubicSplineInterpolation::CubicSplineInterpolation(std::vector<CubicSpline> spli
 }
 
 CubicSplineInterpolation CubicSplineInterpolation::Interpolate(const double& x_start,
-                                                               const size_t& n,
+                                                               const size_t& N,
                                                                const double& step,
                                                                std::function<double(double)> f,
                                                                const double& lval,
                                                                const double& rval) {
+    size_t n = N + 1;
     std::vector<double> mTMA_v(n * 3 + 3);
     std::vector<double> mTMA_rhs_v(n + 1);
     std::vector<double> C(n);
@@ -65,7 +66,7 @@ CubicSplineInterpolation CubicSplineInterpolation::Interpolate(const double& x_s
 
     ps[0] = x_start;
     for (size_t i = 1; i < n; ++i) {
-        ps[i] = x_start+i*step;
+        ps[i] = x_start + i*step;
         splines[i - 1] =
             CubicSpline(ps[i], f(ps[i]), ((f(ps[i]) - f(ps[i - 1])) / step + C[i] * step / 3 + C[i - 1] * step / 6), C[i] / 2, ((C[i] - C[i - 1]) / step) / 6);
     }
@@ -74,11 +75,12 @@ CubicSplineInterpolation CubicSplineInterpolation::Interpolate(const double& x_s
 }
 
 CubicSplineInterpolation CubicSplineInterpolation::Interpolate(const double& x_start,
-                                                               const size_t& n,
+                                                               const size_t& N,
                                                                const double& step,
                                                                std::vector<double> values,
                                                                const double& lval,
                                                                const double& rval) {
+    size_t n = N + 1;
     std::vector<double> mTMA_v(n * 3 + 3);
     std::vector<double> mTMA_rhs_v(n + 1);
     std::vector<double> C(n);
@@ -113,7 +115,7 @@ CubicSplineInterpolation CubicSplineInterpolation::Interpolate(const double& x_s
 
     ps[0] = x_start;
     for (size_t i = 1; i < n; ++i) {
-        ps[i] = x_start+i*step;
+        ps[i] = x_start + i*step;
         splines[i - 1] =
             CubicSpline(ps[i], values[i], ((values[i] - values[i - 1]) / step + C[i] * step / 3 + C[i - 1] * step / 6), C[i] / 2, ((C[i] - C[i - 1]) / step) / 6);
     }
