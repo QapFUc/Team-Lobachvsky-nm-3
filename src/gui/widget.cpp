@@ -268,23 +268,23 @@ void Widget::StartTest() {
 
 void Widget::StartMain() {
     Test=Test.Interpolate(a, 100, b-a/100, [](double x) {
-        return (std::log(x+1))/x;
-        },0,0);
+        return (std::log(x+1)/x);
+        },0,1);
     CreateGraphs(Test);
 }
 
 void Widget::CreateGraphs(CubicSplineInterpolation &spline) {
     QWidget* tab4GraphWidget = new QWidget();
 
-    QChartView* chartView = new QChartView(tab4GraphWidget);
+    QChartView* chartView = new QChartView();
     chartView->setRenderHint(QPainter::Antialiasing);
 
     QChart* chart = new QChart();
 
     QLineSeries* series = new QLineSeries();
-    for (double x = -1.0; x <=1.0;x=x+0.01) {
+    for (double x = 2.0; x <=4.0;x=x+0.002) {
         series->append(x, Test(x));
-        std::cout<<x<<" "<<Test(x)<<std::endl;
+        std::cout<<x<<" "<<Test(x)<<" "<<std::log(x+1)/x<<std::endl;
     }
     chart->addSeries(series);
 
