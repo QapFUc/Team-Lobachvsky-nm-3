@@ -67,7 +67,7 @@ CubicSplineInterpolation CubicSplineInterpolation::Interpolate(const double& x_s
     for (size_t i = 1; i < n; ++i) {
         ps[i] += step;
         splines[i - 1] =
-            CubicSpline(ps[i], f(ps[i]), ((f(ps[i]) - f(ps[i - 1])) / step + C[i] * step / 3 + C[i - 1] * step / 6), C[i], (C[i] - C[i - 1]) / step);
+            CubicSpline(ps[i], f(ps[i]), ((f(ps[i]) - f(ps[i - 1])) / step + C[i] * step / 3 + C[i - 1] * step / 6), C[i] / 2, ((C[i] - C[i - 1]) / step) / 6);
     }
 
     return CubicSplineInterpolation(splines, ps);
@@ -115,7 +115,7 @@ CubicSplineInterpolation CubicSplineInterpolation::Interpolate(const double& x_s
     for (size_t i = 1; i < n; ++i) {
         ps[i] += step;
         splines[i - 1] =
-            CubicSpline(ps[i], values[i], ((values[i] - values[i - 1]) / step + C[i] * step / 3 + C[i - 1] * step / 6), C[i], (C[i] - C[i - 1]) / step);
+            CubicSpline(ps[i], values[i], ((values[i] - values[i - 1]) / step + C[i] * step / 3 + C[i - 1] * step / 6), C[i] / 2, ((C[i] - C[i - 1]) / step) / 6);
     }
 
     return CubicSplineInterpolation(splines, ps);
@@ -157,7 +157,7 @@ CubicSplineInterpolation CubicSplineInterpolation::Interpolate(std::vector<doubl
     for (size_t i = 1; i < n; ++i) {
         double step = xs[i] - xs[i - 1];
         splines[i - 1] =
-            CubicSpline(xs[i], values[i], ((values[i] - values[i - 1]) / step + C[i] * step / 3 + C[i - 1] * step / 6), C[i], (C[i] - C[i - 1]) / step);
+            CubicSpline(xs[i], values[i], ((values[i] - values[i - 1]) / step + C[i] * step / 3 + C[i - 1] * step / 6), C[i] / 2, ((C[i] - C[i - 1]) / step) / 6);
     }
 
     return CubicSplineInterpolation(splines, xs);
