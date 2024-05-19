@@ -16,12 +16,12 @@ int main() {
     double step = 4-x_start/n;
     double absTolerance = 1e-4;
 
-    std::vector<double> xs(n);
-    for (size_t i = 0; i < n; ++i) {
+    std::vector<double> xs(n+1);
+    for (size_t i = 0; i < n + 1; ++i) {
         xs[i] = x_start + i * step;
     }
 
-    std::vector<double> values(n);
+    std::vector<double> values(n+1);
     for (size_t i = 0; i < n; ++i) {
         values[i] = func(xs[i]);
     }
@@ -34,17 +34,17 @@ int main() {
     for (size_t i = 0; i < n; ++i) {
         std::cout<<interpWFunc(x)<<" "<<func(x)<<std::endl;
         if (std::abs(interpWFunc(x) - func(x)) >= absTolerance) {
-            std::cout << "Tolerance between interpolation and function in x=" << x << " more than limit " << absTolerance << '\n';
+            std::cout << "(Interpolation w/ function given) Tolerance between interpolation and function in x=" << x << " more than limit " << absTolerance << '\n';
             std::cout << "Interpolation value = " << interpWFunc(x) << " Func value = " << func(x) << '\n';
             return 1;
         }
         if (std::abs(interpWValues(x) - func(x)) >= absTolerance) {
-            std::cout << "Tolerance between interpolation and function in x=" << x << " more than limit " << absTolerance << '\n';
+            std::cout << "(Interpolation w/ values given) Tolerance between interpolation and function in x=" << x << " more than limit " << absTolerance << '\n';
             std::cout << "Interpolation value = " << interpWValues(x) << " Func value = " << func(x) << '\n';
             return 1;
         }
         if (std::abs(interpWXs(x) - func(x)) >= absTolerance) {
-            std::cout << "Tolerance between interpolation and function in x=" << x << " more than limit " << absTolerance << '\n';
+            std::cout << "(Interpolation w/ xs and values given) Tolerance between interpolation and function in x=" << x << " more than limit " << absTolerance << '\n';
             std::cout << "Interpolation value = " << interpWXs(x) << " Func value = " << func(x) << '\n';
             return 1;
         }
