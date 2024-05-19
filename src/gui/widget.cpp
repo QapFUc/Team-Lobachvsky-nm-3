@@ -180,64 +180,71 @@ void Widget::CreateGraphs() {
 }
 
 void Widget::CreateInfo() {
-    QWidget *widget = new QWidget(tab4);
     QVBoxLayout *layout_Vert = new QVBoxLayout();
     QHBoxLayout *layout_1 = new QHBoxLayout();
     QHBoxLayout *layout_2 = new QHBoxLayout();
-    widget->setLayout(layout_Vert);
+    tab4->setLayout(layout_Vert);
 
-    QLabel *label_n = new QLabel("Сетка сплайна n =", widget);
-    QLineEdit *lineEdit_n = new QLineEdit(widget);
-    layout_1->addWidget(label_n);
-    layout_1->addWidget(lineEdit_n);
+    QLabel *label_n = new QLabel("Сетка сплайна n =", tab4);
+    QLineEdit *lineEdit_n = new QLineEdit();
+    lineEdit_n->setMaximumWidth(200);
+    layout_1->addWidget(label_n, 0, Qt::AlignRight);
+    layout_1->addWidget(lineEdit_n, 0, Qt::AlignLeft);
     layout_Vert->addLayout(layout_1);
 
-    QLabel *label_N = new QLabel("Контрольная сетка N =", widget);
-    QLineEdit *lineEdit_N = new QLineEdit(widget);
-    layout_2->addWidget(label_N);
-    layout_2->addWidget(lineEdit_N);
+    QLabel *label_N = new QLabel("Контрольная сетка N =", tab4);
+    QLineEdit *lineEdit_N = new QLineEdit();
+    lineEdit_N->setMaximumWidth(200);
+    layout_2->addWidget(label_N, 0, Qt::AlignRight);
+    layout_2->addWidget(lineEdit_N, 0, Qt::AlignLeft);
     layout_Vert->addLayout(layout_2);
 
-    QLabel *label_text1 = new QLabel("Погрешность сплайна на контрольной сетке: ", widget);
-    layout_Vert->addWidget(label_text1);
+    QLabel *label_text1 = new QLabel("Погрешность сплайна на контрольной сетке: ", tab4);
+    layout_Vert->addWidget(label_text1, 0, Qt::AlignCenter); //!!
 
     QHBoxLayout *layout_3 = new QHBoxLayout();
-    QLabel *label_max1 = new QLabel("max |F(x_j) - S(x_j)| = ", widget);
-    QLineEdit *lineEdit_max1 = new QLineEdit(widget);
-    layout_3->addWidget(label_max1);
-    layout_3->addWidget(lineEdit_max1);
-    QLabel *label_max1_x = new QLabel(" при x = ", widget);
-    QLineEdit *lineEdit_max1_x = new QLineEdit(widget);
-    layout_3->addWidget(label_max1_x);
-    layout_3->addWidget(lineEdit_max1_x);
+    QLabel *label_max1 = new QLabel("max |F(x_j) - S(x_j)| = ", tab4);
+    lineEdit_max1 = new QLineEdit();
+    lineEdit_max1->setMaximumWidth(200);
+    layout_3->addWidget(label_max1, 0, Qt::AlignRight);
+    layout_3->addWidget(lineEdit_max1, 0, Qt::AlignLeft);
+    QLabel *label_max1_x = new QLabel(" при x = ", tab4);
+    lineEdit_max1_x = new QLineEdit();
+    lineEdit_max1_x->setMaximumWidth(100);
+    layout_3->addWidget(label_max1_x, 0, Qt::AlignRight);
+    layout_3->addWidget(lineEdit_max1_x, 0, Qt::AlignLeft);
     layout_Vert->addLayout(layout_3);
 
-    QLabel *label_text2 = new QLabel("Погрешность производной на контрольной сетке: ", widget);
-    layout_Vert->addWidget(label_text2);
+    QLabel *label_text2 = new QLabel("Погрешность производной на контрольной сетке: ", tab4);
+    layout_Vert->addWidget(label_text2, 0, Qt::AlignCenter);
 
     QHBoxLayout *layout_4 = new QHBoxLayout();
-    QLabel *label_max2 = new QLabel("max |F'(x_j) - S'(x_j)| = ", widget);
-    QLineEdit *lineEdit_max2 = new QLineEdit(widget);
-    layout_4->addWidget(label_max2);
-    layout_4->addWidget(lineEdit_max2);
-    QLabel *label_max2_x = new QLabel(" при x = ", widget);
-    QLineEdit *lineEdit_max2_x = new QLineEdit(widget);
-    layout_4->addWidget(label_max2_x);
-    layout_4->addWidget(lineEdit_max2_x);
+    QLabel *label_max2 = new QLabel("max |F'(x_j) - S'(x_j)| = ", tab4);
+    lineEdit_max2 = new QLineEdit();
+    lineEdit_max2->setMaximumWidth(200);
+    layout_4->addWidget(label_max2, 0, Qt::AlignRight);
+    layout_4->addWidget(lineEdit_max2, 0, Qt::AlignLeft);
+    QLabel *label_max2_x = new QLabel(" при x = ", tab4);
+    lineEdit_max2_x = new QLineEdit();
+    lineEdit_max2_x->setMaximumWidth(100);
+    layout_4->addWidget(label_max2_x, 0, Qt::AlignRight);
+    layout_4->addWidget(lineEdit_max2_x, 0, Qt::AlignLeft);
     layout_Vert->addLayout(layout_4);
 
-    QLabel *label_text3 = new QLabel("Погрешность второй производной на контрольной сетке: ", widget);
-    layout_Vert->addWidget(label_text3);
+    QLabel *label_text3 = new QLabel("Погрешность второй производной на контрольной сетке: ", tab4);
+    layout_Vert->addWidget(label_text3, 0, Qt::AlignCenter);
 
     QHBoxLayout *layout_5 = new QHBoxLayout();
-    QLabel *label_max3 = new QLabel("max |F''(x_j) - S''(x_j)| = ", widget);
-    QLineEdit *lineEdit_max3 = new QLineEdit(widget);
-    layout_5->addWidget(label_max3);
-    layout_5->addWidget(lineEdit_max3);
-    QLabel *label_max3_x = new QLabel(" при x = ", widget);
-    QLineEdit *lineEdit_max3_x = new QLineEdit(widget);
-    layout_5->addWidget(label_max3_x);
-    layout_5->addWidget(lineEdit_max3_x);
+    QLabel *label_max3 = new QLabel("max |F''(x_j) - S''(x_j)| = ", tab4);
+    lineEdit_max3 = new QLineEdit();
+    lineEdit_max3->setMaximumWidth(200);
+    layout_5->addWidget(label_max3, 0, Qt::AlignRight);
+    layout_5->addWidget(lineEdit_max3, 0, Qt::AlignLeft);
+    QLabel *label_max3_x = new QLabel(" при x = ", tab4);
+    lineEdit_max3_x = new QLineEdit();
+    lineEdit_max3_x->setMaximumWidth(100);
+    layout_5->addWidget(label_max3_x, 0, Qt::AlignRight);
+    layout_5->addWidget(lineEdit_max3_x, 0, Qt::AlignLeft);
     layout_Vert->addLayout(layout_5);
 
 
