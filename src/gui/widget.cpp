@@ -34,20 +34,18 @@ Widget::Widget(QWidget* parent) : QWidget(parent) {
     connect(StartActionTest, &QAction::triggered, this, &Widget::StartTest);
     QAction* StartActionMain = fileMenuFile->addAction(tr("&Start Main"));
     connect(StartActionMain, &QAction::triggered, this, &Widget::StartMain);
-    QAction* StartActionOscil = fileMenuFile->addAction(tr("&Start Oscil"));
-    connect(StartActionOscil, &QAction::triggered, this, &Widget::StartOscil);
 
     QTabWidget* tabWidget = new QTabWidget(this);
     mainlayout->addWidget(tabWidget);
     tabWidget->resize(mainWindowWidth * 0.9, mainWindowHeight * 0.9);  // Размер вкладок аналогичен размеру окна
-    
+
     tabTask = new QWidget();
     tab1 = new QWidget();
     tab2 = new QWidget();
     tab3 = new QWidget();
     tab4 = new QWidget();
 
-    tabWidget->addTab(tabTask, tr("Ввод задачи и параметров"));
+    tabWidget->addTab(tabTask,tr("Задача"));
     tabWidget->addTab(tab1, tr("Таблица 1"));
     tabWidget->addTab(tab2, tr("Таблица 2"));
     tabWidget->addTab(tab3, tr("График"));
@@ -66,10 +64,10 @@ Widget::Widget(QWidget* parent) : QWidget(parent) {
     tab3->setLayout(new QVBoxLayout());  //WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     tab3->layout()->addWidget(label3);
 
-    CreateTable1();
+   // CreateTable1();
     // table 1 is done.
 
-    CreateTable2();
+    //CreateTable2();
     // table 2 is done.
 
     //CreateGraphs();
@@ -78,6 +76,7 @@ Widget::Widget(QWidget* parent) : QWidget(parent) {
     CreateInfo();
     // widget 4
     InitTabTask();
+
 }
 
 Widget::~Widget() {}
@@ -325,7 +324,7 @@ void Widget::StartTest() {
             if (x > 0 && x <= 1) {
                 return (-(x * x * x) + 3 * x * x);
             }
-            return 0.d;
+            return .0;
         },
         0,
         0);
@@ -346,20 +345,6 @@ void Widget::StartMain() {
     ModInfo(Test);
 }
 
-void Widget::StartOscil() {
-    Test = Test.Interpolate(
-        a,
-        70,
-        (b - a) / 2,
-        [](double x) {
-            return (std::log(x + 1) / x + std::cos(10*x));
-        },
-        0,
-        0);
-    CreateGraphs(Test);
-    ModInfo(Test);
-}
-
 void Widget::CreateGraphs(CubicSplineInterpolation& spline) {
     QWidget* tab4GraphWidget = new QWidget();
 
@@ -369,7 +354,7 @@ void Widget::CreateGraphs(CubicSplineInterpolation& spline) {
     QChart* chart = new QChart();
 
     QLineSeries* series = new QLineSeries();
-    for (double x = a; x <= b; x = x + 0.0002) {
+    for (double x = -1.0; x <= 1.0; x = x + 0.0002) {
         series->append(x, Test(x));
         std::cout << x << " " << Test(x) << " " << std::log(x + 1) / x << std::endl;
     }

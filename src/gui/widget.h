@@ -1,4 +1,3 @@
-
 #ifndef WIDGET_H
 #define WIDGET_H
 
@@ -10,14 +9,13 @@
 #include <QTabWidget>
 #include <QTableWidget>
 #include <QWidget>
-#include <QLineEdit>
-#include <QBoxLayout>
-#include <Qt>
 #include <QComboBox>
 #include <QPushButton>
 
+
 #include <iostream>
 #include <signal.h>
+
 
 #include "core/Eval.hpp"
 
@@ -40,8 +38,8 @@ public:
 public slots:
     void StartTest();
     void StartMain();
-    void StartOscil();
     void SendDatabtnClick();
+
 
 private:
     QWidget* tabTask;
@@ -53,9 +51,9 @@ private:
     QLineEdit* InputOmega;
     QComboBox* InputTask;
     QPushButton* SendDatabtn;
-
+    
     double a = 2;
-    double b = 10;
+    double b = 4;
     int n = 0;
     double step = 0;
     QTabWidget* tabWidget;
