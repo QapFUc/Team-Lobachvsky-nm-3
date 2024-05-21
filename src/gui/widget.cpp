@@ -59,10 +59,10 @@ Widget::Widget(QWidget* parent) : QWidget(parent) {
     tab3->setLayout(new QVBoxLayout());  //WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     tab3->layout()->addWidget(label3);
 
-    // CreateTable1();
+    CreateTable1();
     // table 1 is done.
 
-    //CreateTable2();
+    CreateTable2();
     // table 2 is done.
 
     //CreateGraphs();
