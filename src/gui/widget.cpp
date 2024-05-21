@@ -129,31 +129,36 @@ void Widget::CreateTable1() {
     }
 
     table_1->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    QTableWidgetItem* headerItem = new QTableWidgetItem();
-    for (int col = 0; col < 6; ++col) {
+    for (int col = 0; col < 6; col++) {
+        QTableWidgetItem* headerItem = new QTableWidgetItem();
         switch (col) {
         case 0:
             headerItem->setText("x(i-1)");
+            table_1->setHorizontalHeaderItem(col, headerItem);
             break;
         case 1:
             headerItem->setText("x(i)");
+            table_1->setHorizontalHeaderItem(col, headerItem);
             break;
         case 2:
             headerItem->setText("a(i)");
+            table_1->setHorizontalHeaderItem(col, headerItem);
             break;
         case 3:
             headerItem->setText("b(i)");
+            table_1->setHorizontalHeaderItem(col, headerItem);
             break;
         case 4:
             headerItem->setText("c(i)");
+            table_1->setHorizontalHeaderItem(col, headerItem);
             break;
         case 5:
             headerItem->setText("d(i)");
+            table_1->setHorizontalHeaderItem(col, headerItem);
             break;
         }
-        table_1->setHorizontalHeaderItem(col, headerItem);
+        tab1->layout()->addWidget(table_1);
     }
-    tab1->layout()->addWidget(table_1);
 }
 
 void Widget::CreateTable2() {
