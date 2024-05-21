@@ -2,13 +2,6 @@
 #include "dataTypes/config.hpp"
 #include "widget.h"
 
-#include <QtCharts>
-#include <QtWidgets>
-#include <cmath>
-#include <qlogging.h>
-#include <qnamespace.h>
-#include <qwidget.h>
-#include <string>
 
 Widget::Widget(QWidget* parent) : QWidget(parent) {
     setWindowTitle("LobachevskyLab");
@@ -78,6 +71,7 @@ Widget::Widget(QWidget* parent) : QWidget(parent) {
     CreateInfo();
     // widget 4
     InitTabTask();
+    InitGraphs();
 }
 
 Widget::~Widget() {}
@@ -344,35 +338,46 @@ void Widget::StartOscil(const Config& config) {
             return (std::log(x + 1) / x + std::cos(10 * x));
         },
         0,
-        1);
+        0);
     CreateGraphs(Test, config);
     ModInfo(Test);
 }
 
-void Widget::CreateGraphs(const CubicSplineInterpolation& spline, const Config& config) {
+void Widget::InitGraphs() {
     tab4GraphWidget = new QWidget();
-
-    QChartView* chartView = new QChartView();
+    chartView = new QChartView();
     chartView->setRenderHint(QPainter::Antialiasing);
-
-    QChart* chart = new QChart();
-
-    QLineSeries* series = new QLineSeries();
-    for (double x = config.XStart; x <= config.XEnd; x = x + ((config.XEnd - config.XStart) / (100 * config.N))) {
-        series->append(x, Test(x));
-    }
+    chart = new QChart();
+    series = new QLineSeries();
+    axisX = new QValueAxis();
+    axisY = new QValueAxis();
+    
+    tab4GraphWidget->setLayout(new QVBoxLayout());
+    chartView->setChart(chart);  
+    tab3->layout()->addWidget(chartView);  
     chart->addSeries(series);
+    chart->addAxis(axisX, Qt::AlignBottom);
+    chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisX);
+    series->attachAxis(axisY);
+}
+
+void Widget::CreateGraphs(const CubicSplineInterpolation& spline, const Config& config) {
+    series->clear();
+    axisX->setRange(config.XStart, config.XEnd);
+    double minY = std::numeric_limits<double>::max();
+    double maxY = std::numeric_limits<double>::lowest();
+    for (double x = config.XStart; x <= config.XEnd; x += (config.XEnd - config.XStart) / (100 * config.N)) {
+        double y = Test(x);
+        if (y < minY) minY = y;
+        if (y > maxY) maxY = y;
+        series->append(x, y);
+    }
+    axisY->setRange(minY, maxY);
 
     chart->setTitle("Пример графика");
 
-    chart->createDefaultAxes();
 
-    chartView->setChart(chart);
-
-    tab4GraphWidget->setLayout(new QVBoxLayout());  //WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    tab3->layout()->addWidget(chartView);
-
-    // tabWidget->addTab(tab4GraphWidget, tr("График"));
 }
 
 void Widget::ModInfo(CubicSplineInterpolation& spline) {
@@ -381,16 +386,16 @@ void Widget::ModInfo(CubicSplineInterpolation& spline) {
 }
 
 void Widget::SendDatabtnClick() {
-    config = Config((InputXStart->text()).toDouble(), (InputXEnd->text()).toDouble(), (InputN->text()).toDouble(), InputTask->count());
-    qDebug()<<std::to_string(InputTask->count());
-    switch (InputTask->count()) {
-    case 1:
+    config = Config((InputXStart->text()).toDouble(), (InputXEnd->text()).toDouble(), (InputN->text()).toDouble(), InputTask->currentIndex());
+    qDebug()<<std::to_string(InputTask->currentIndex());
+    switch (InputTask->currentIndex()) {
+    case 0:
         StartTest(config);
         break;
-    case 2:
+    case 1:
         StartMain(config);
         break;
-    case 3:
+    case 2:
         StartOscil(config);
         break;
     default:

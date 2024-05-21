@@ -15,11 +15,11 @@
 #include <QPushButton>
 #include <QString>
 #include <QDebug>
-
+#include <QtCharts>
 
 #include <iostream>
 #include <signal.h>
-
+#include <cmath>
 
 #include "core/Eval.hpp"
 #include "dataTypes/config.hpp"
@@ -33,6 +33,7 @@ public:
     void CreateTable1();
     void CreateTable2();
     //void CreateGraphs();
+    void InitGraphs();
     void CreateGraphs(const CubicSplineInterpolation& spline,const Config& config);
     void CreateInfo();
     void ModInfo(CubicSplineInterpolation& spline);
@@ -60,8 +61,14 @@ private:
     QComboBox* InputTask;
     QPushButton* SendDatabtn;
     
-    QTabWidget* tabWidget;
     QWidget* tab4GraphWidget;
+    QChartView* chartView;
+    QLineSeries* series;
+    QChart* chart;
+    QValueAxis* axisX;
+    QValueAxis* axisY;
+
+    QTabWidget* tabWidget;
     QWidget* tab1;
     QWidget* tab2;
     QWidget* tab3;
