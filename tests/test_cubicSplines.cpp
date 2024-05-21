@@ -13,7 +13,7 @@ double func(const double& x) {
 int main() {
     double x_start = 2l;
     size_t n = 100;
-    double step = 4-x_start/n;
+    double step = (4-x_start)/n;
     double absTolerance = 1e-4;
 
     std::vector<double> xs(n+1);

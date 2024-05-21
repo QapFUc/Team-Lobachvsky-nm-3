@@ -1,3 +1,4 @@
+#pragma once
 
 #ifndef WIDGET_H
 #define WIDGET_H
@@ -10,11 +11,18 @@
 #include <QTabWidget>
 #include <QTableWidget>
 #include <QWidget>
+#include <QComboBox>
+#include <QPushButton>
+#include <QString>
+#include <QDebug>
+#include <QtCharts>
 
-#include <signal.h>
 #include <iostream>
+#include <signal.h>
+#include <cmath>
 
 #include "core/Eval.hpp"
+#include "dataTypes/config.hpp"
 
 class Widget : public QWidget {
     Q_OBJECT
@@ -25,18 +33,41 @@ public:
     void CreateTable1();
     void CreateTable2();
     //void CreateGraphs();
-    void CreateGraphs(CubicSplineInterpolation &spline);
+    void InitGraphs();
+    void CreateGraphs(const CubicSplineInterpolation& spline,const Config& config);
     void CreateInfo();
+    void ModInfo(CubicSplineInterpolation& spline);
+    void InitTabTask();
+
+    void StartTest(const Config& config);
+    void StartMain(const Config& config);
+    void StartOscil(const Config& config);
 
     ~Widget();
 
 public slots:
-    void StartTest();
-    void StartMain();
+    void SaveAs(); 
+    void SendDatabtnClick();
+
 
 private:
-    float a = 2;
-    float b = 4;
+    Config config;
+
+    QWidget* tabTask;
+    QVBoxLayout* MainHLayout;
+    QLineEdit* InputXStart;
+    QLineEdit* InputXEnd;
+    QLineEdit* InputN;
+    QComboBox* InputTask;
+    QPushButton* SendDatabtn;
+    
+    QWidget* tab4GraphWidget;
+    QChartView* chartView;
+    QLineSeries* series;
+    QChart* chart;
+    QValueAxis* axisX;
+    QValueAxis* axisY;
+
     QTabWidget* tabWidget;
     QWidget* tab1;
     QWidget* tab2;
@@ -52,5 +83,6 @@ private:
     QLineEdit* lineEdit_max3_x;
     CubicSplineInterpolation Test;
     CubicSplineInterpolation Main;
+    CubicSplineInterpolation Oscil;
 };
 #endif  // WIDGET_H

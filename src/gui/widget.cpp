@@ -1,10 +1,7 @@
 #include "core/Eval.hpp"
+#include "dataTypes/config.hpp"
 #include "widget.h"
 
-#include <QtCharts>
-#include <QtWidgets>
-#include <cmath>
-#include <qwidget.h>
 
 Widget::Widget(QWidget* parent) : QWidget(parent) {
     setWindowTitle("LobachevskyLab");
@@ -28,22 +25,22 @@ Widget::Widget(QWidget* parent) : QWidget(parent) {
     QVBoxLayout* mainlayout = new QVBoxLayout(this);
 
     QMenuBar* menuBar = new QMenuBar(this);
-    QMenu* fileMenuFile = menuBar->addMenu(tr("&Start"));
+    QMenu* fileMenuFile = menuBar->addMenu(tr("&File"));
     mainlayout->setMenuBar(menuBar);
-    QAction* StartActionTest = fileMenuFile->addAction(tr("&Start Test"));
-    connect(StartActionTest, &QAction::triggered, this, &Widget::StartTest);
-    QAction* StartActionMain = fileMenuFile->addAction(tr("&Start Main"));
-    connect(StartActionMain, &QAction::triggered, this, &Widget::StartMain);
+    QAction* SaveAs = fileMenuFile->addAction(tr("&Save as..."));
+    connect(SaveAs, &QAction::triggered, this, &Widget::SaveAs);
 
     QTabWidget* tabWidget = new QTabWidget(this);
     mainlayout->addWidget(tabWidget);
     tabWidget->resize(mainWindowWidth * 0.9, mainWindowHeight * 0.9);  // Размер вкладок аналогичен размеру окна
 
+    tabTask = new QWidget();
     tab1 = new QWidget();
     tab2 = new QWidget();
     tab3 = new QWidget();
     tab4 = new QWidget();
 
+    tabWidget->addTab(tabTask, tr("Задача"));
     tabWidget->addTab(tab1, tr("Таблица 1"));
     tabWidget->addTab(tab2, tr("Таблица 2"));
     tabWidget->addTab(tab3, tr("График"));
@@ -62,10 +59,10 @@ Widget::Widget(QWidget* parent) : QWidget(parent) {
     tab3->setLayout(new QVBoxLayout());  //WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     tab3->layout()->addWidget(label3);
 
-    CreateTable1();
+    // CreateTable1();
     // table 1 is done.
 
-    CreateTable2();
+    //CreateTable2();
     // table 2 is done.
 
     //CreateGraphs();
@@ -73,9 +70,53 @@ Widget::Widget(QWidget* parent) : QWidget(parent) {
 
     CreateInfo();
     // widget 4
+    InitTabTask();
+    InitGraphs();
 }
 
 Widget::~Widget() {}
+
+void Widget::InitTabTask() {
+    QLabel* label1 = new QLabel("Начало отрезка", tabTask);
+    QLabel* label2 = new QLabel("Конец отрезка", tabTask);
+    QLabel* label3 = new QLabel("Количество шагов", tabTask);
+
+    MainHLayout = new QVBoxLayout();
+
+    tabTask->setLayout(MainHLayout);
+
+    InputXStart = new QLineEdit();
+    InputXStart->setMaximumWidth(200);
+    InputXEnd = new QLineEdit();
+    InputXEnd->setMaximumWidth(200);
+    InputN = new QLineEdit();
+    InputN->setMaximumWidth(200);
+    InputTask = new QComboBox();
+    InputTask->addItem("Start Test");
+    InputTask->addItem("Start Main");
+    InputTask->addItem("Start Oscil");
+    SendDatabtn = new QPushButton("&Send Data");
+    QHBoxLayout* HLayoutInputXStart = new QHBoxLayout();
+    QHBoxLayout* HLayoutInputXEnd = new QHBoxLayout();
+    QHBoxLayout* HLayoutInputN = new QHBoxLayout();
+    QHBoxLayout* HLayoutInputConnect = new QHBoxLayout();
+
+    HLayoutInputXStart->addWidget(label1, 0, Qt::AlignRight);
+    HLayoutInputXStart->addWidget(InputXStart, 0, Qt::AlignLeft);
+    HLayoutInputXEnd->addWidget(label2, 0, Qt::AlignRight);
+    HLayoutInputXEnd->addWidget(InputXEnd, 0, Qt::AlignLeft);
+    HLayoutInputN->addWidget(label3, 0, Qt::AlignRight);
+    HLayoutInputN->addWidget(InputN, 0, Qt::AlignLeft);
+    HLayoutInputConnect->addWidget(SendDatabtn, 0, Qt::AlignRight);
+    HLayoutInputConnect->addWidget(InputTask, 0, Qt::AlignLeft);
+
+    MainHLayout->addLayout(HLayoutInputXStart);
+    MainHLayout->addLayout(HLayoutInputXEnd);
+    MainHLayout->addLayout(HLayoutInputN);
+    MainHLayout->addLayout(HLayoutInputConnect);
+
+    QObject::connect(SendDatabtn, &QPushButton::clicked, this, &Widget::SendDatabtnClick);
+}
 
 void Widget::CreateTable1() {
     QTableWidget* table_1 = new QTableWidget(5, 6);
@@ -88,9 +129,8 @@ void Widget::CreateTable1() {
     }
 
     table_1->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
+    QTableWidgetItem* headerItem = new QTableWidgetItem();
     for (int col = 0; col < 6; ++col) {
-        QTableWidgetItem* headerItem = new QTableWidgetItem();
         switch (col) {
         case 0:
             headerItem->setText("x(i-1)");
@@ -192,14 +232,14 @@ void Widget::CreateInfo() {
     tab4->setLayout(layout_Vert);
 
     QLabel* label_n = new QLabel("Сетка сплайна n =", tab4);
-    QLineEdit* lineEdit_n = new QLineEdit();
+    lineEdit_n = new QLineEdit();
     lineEdit_n->setMaximumWidth(200);
     layout_1->addWidget(label_n, 0, Qt::AlignRight);
     layout_1->addWidget(lineEdit_n, 0, Qt::AlignLeft);
     layout_Vert->addLayout(layout_1);
 
     QLabel* label_N = new QLabel("Контрольная сетка N =", tab4);
-    QLineEdit* lineEdit_N = new QLineEdit();
+    lineEdit_N = new QLineEdit();
     lineEdit_N->setMaximumWidth(200);
     layout_2->addWidget(label_N, 0, Qt::AlignRight);
     layout_2->addWidget(lineEdit_N, 0, Qt::AlignLeft);
@@ -254,48 +294,117 @@ void Widget::CreateInfo() {
     layout_Vert->addLayout(layout_5);
 }
 
-void Widget::StartTest() {
-    Test=Test.Interpolate(-1.0, 100, 0.02, [](double x) {
-        if (x >= -1 && x <= 0) {
-            return (x * x * x + 3 * x * x);
-        }
-        if (x > 0 && x <= 1) {
-            return (-(x * x * x) + 3 * x * x);
-        }
-        },0,0);
-    CreateGraphs(Test);
+void Widget::StartTest(const Config& config) {
+    Test = Test.Interpolate(
+        config.XStart,
+        config.N,
+        (config.XEnd-config.XStart) / config.N,
+        [](double x) {
+            if (x >= -1 && x <= 0) {
+                return (x * x * x + 3 * x * x);
+            }
+            if (x > 0 && x <= 1) {
+                return (-(x * x * x) + 3 * x * x);
+            }
+            return .0;
+        },
+        0,
+        0);
+
+    CreateGraphs(Test, config);
+    ModInfo(Test);
 }
 
-void Widget::StartMain() {
-    Test=Test.Interpolate(a, 100, b-a/100, [](double x) {
-        return (std::log(x+1)/x);
-        },0,1);
-    CreateGraphs(Test);
+void Widget::StartMain(const Config& config) {
+    Test = Test.Interpolate(
+        config.XStart,
+        config.N,
+        (config.XEnd-config.XStart) / config.N,
+        [](double x) {
+            return (std::log(x + 1) / x);
+        },
+        0,
+        0);
+    CreateGraphs(Test, config);
+    ModInfo(Test);
 }
 
-void Widget::CreateGraphs(CubicSplineInterpolation &spline) {
-    QWidget* tab4GraphWidget = new QWidget();
+void Widget::StartOscil(const Config& config) {
+    Test = Test.Interpolate(
+        config.XStart,
+        config.N,
+        (config.XEnd-config.XStart) / config.N,
+        [](double x) {
+            return (std::log(x + 1) / x + std::cos(10 * x));
+        },
+        0,
+        0);
+    CreateGraphs(Test, config);
+    ModInfo(Test);
+}
 
-    QChartView* chartView = new QChartView();
+void Widget::InitGraphs() {
+    tab4GraphWidget = new QWidget();
+    chartView = new QChartView();
     chartView->setRenderHint(QPainter::Antialiasing);
-
-    QChart* chart = new QChart();
-
-    QLineSeries* series = new QLineSeries();
-    for (double x = 2.0; x <=4.0;x=x+0.002) {
-        series->append(x, Test(x));
-        std::cout<<x<<" "<<Test(x)<<" "<<std::log(x+1)/x<<std::endl;
-    }
+    chart = new QChart();
+    series = new QLineSeries();
+    axisX = new QValueAxis();
+    axisY = new QValueAxis();
+    
+    tab4GraphWidget->setLayout(new QVBoxLayout());
+    chartView->setChart(chart);  
+    tab3->layout()->addWidget(chartView);  
     chart->addSeries(series);
+    chart->addAxis(axisX, Qt::AlignBottom);
+    chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisX);
+    series->attachAxis(axisY);
+}
+
+void Widget::CreateGraphs(const CubicSplineInterpolation& spline, const Config& config) {
+    series->clear();
+    axisX->setRange(config.XStart, config.XEnd);
+    double minY = std::numeric_limits<double>::max();
+    double maxY = std::numeric_limits<double>::lowest();
+    for (double x = config.XStart; x <= config.XEnd; x += (config.XEnd - config.XStart) / (100 * config.N)) {
+        double y = Test(x);
+        if (y < minY) minY = y;
+        if (y > maxY) maxY = y;
+        series->append(x, y);
+    }
+    axisY->setRange(minY, maxY);
 
     chart->setTitle("Пример графика");
 
-    chart->createDefaultAxes();
 
-    chartView->setChart(chart);
-
-    tab4GraphWidget->setLayout(new QVBoxLayout());  //WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    tab3->layout()->addWidget(chartView);
-
-    // tabWidget->addTab(tab4GraphWidget, tr("График"));
 }
+
+void Widget::ModInfo(CubicSplineInterpolation& spline) {
+    lineEdit_n->setText(QString::number(1));
+    lineEdit_n->setReadOnly(1);
+}
+
+void Widget::SendDatabtnClick() {
+    config = Config((InputXStart->text()).toDouble(), (InputXEnd->text()).toDouble(), (InputN->text()).toDouble(), InputTask->currentIndex());
+    if ((InputTask->currentIndex() == 1 || InputTask->currentIndex() == 2) && config.XStart <= 0) {
+        QMessageBox::critical(this, "Critical Error", "Start point must be > 0");
+        return;
+    }
+    switch (InputTask->currentIndex()) {
+    case 0:
+        StartTest(config);
+        break;
+    case 1:
+        StartMain(config);
+        break;
+    case 2:
+        StartOscil(config);
+        break;
+    default:
+        StartTest(config);
+        break;
+    }
+}
+
+void Widget::SaveAs() {}
