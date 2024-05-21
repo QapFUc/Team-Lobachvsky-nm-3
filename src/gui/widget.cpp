@@ -388,7 +388,7 @@ void Widget::ModInfo(CubicSplineInterpolation& spline) {
 void Widget::SendDatabtnClick() {
     config = Config((InputXStart->text()).toDouble(), (InputXEnd->text()).toDouble(), (InputN->text()).toDouble(), InputTask->currentIndex());
     if ((InputTask->currentIndex() == 1 || InputTask->currentIndex() == 2) && config.XStart <= 0) {
-        QMessageBox::warning(this, "Critical Error", "Start point must be > 0");
+        QMessageBox::critical(this, "Critical Error", "Start point must be > 0");
         return;
     }
     switch (InputTask->currentIndex()) {
