@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef WIDGET_H
 #define WIDGET_H
 
@@ -11,6 +13,8 @@
 #include <QWidget>
 #include <QComboBox>
 #include <QPushButton>
+#include <QString>
+#include <QDebug>
 
 
 #include <iostream>
@@ -18,6 +22,7 @@
 
 
 #include "core/Eval.hpp"
+#include "dataTypes/config.hpp"
 
 class Widget : public QWidget {
     Q_OBJECT
@@ -28,35 +33,35 @@ public:
     void CreateTable1();
     void CreateTable2();
     //void CreateGraphs();
-    void CreateGraphs(CubicSplineInterpolation& spline);
+    void CreateGraphs(const CubicSplineInterpolation& spline,const Config& config);
     void CreateInfo();
     void ModInfo(CubicSplineInterpolation& spline);
     void InitTabTask();
 
+    void StartTest(const Config& config);
+    void StartMain(const Config& config);
+    void StartOscil(const Config& config);
+
     ~Widget();
 
 public slots:
-    void StartTest();
-    void StartMain();
+    void SaveAs(); 
     void SendDatabtnClick();
 
 
 private:
+    Config config;
+
     QWidget* tabTask;
     QVBoxLayout* MainHLayout;
+    QLineEdit* InputXStart;
+    QLineEdit* InputXEnd;
     QLineEdit* InputN;
-    QLineEdit* InputM;
-    QLineEdit* InputEps;
-    QLineEdit* InputMaxStep;
-    QLineEdit* InputOmega;
     QComboBox* InputTask;
     QPushButton* SendDatabtn;
     
-    double a = 2;
-    double b = 4;
-    int n = 0;
-    double step = 0;
     QTabWidget* tabWidget;
+    QWidget* tab4GraphWidget;
     QWidget* tab1;
     QWidget* tab2;
     QWidget* tab3;
