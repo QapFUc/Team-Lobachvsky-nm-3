@@ -1,28 +1,30 @@
 #pragma once
 
+#include <functional>
+#include <qlineedit.h>
 #ifndef WIDGET_H
-#define WIDGET_H
+#    define WIDGET_H
 
-#include <QGuiApplication>
-#include <QLabel>
-#include <QLayout>
-#include <QMenuBar>
-#include <QScreen>
-#include <QTabWidget>
-#include <QTableWidget>
-#include <QWidget>
-#include <QComboBox>
-#include <QPushButton>
-#include <QString>
-#include <QDebug>
-#include <QtCharts>
+#    include <QComboBox>
+#    include <QDebug>
+#    include <QGuiApplication>
+#    include <QLabel>
+#    include <QLayout>
+#    include <QMenuBar>
+#    include <QPushButton>
+#    include <QScreen>
+#    include <QString>
+#    include <QTabWidget>
+#    include <QTableWidget>
+#    include <QWidget>
+#    include <QtCharts>
 
-#include <iostream>
-#include <signal.h>
-#include <cmath>
+#    include <cmath>
+#    include <iostream>
+#    include <signal.h>
 
-#include "core/Eval.hpp"
-#include "dataTypes/config.hpp"
+#    include "core/Eval.hpp"
+#    include "dataTypes/config.hpp"
 
 class Widget : public QWidget {
     Q_OBJECT
@@ -34,7 +36,7 @@ public:
     void CreateTable2();
     //void CreateGraphs();
     void InitGraphs();
-    void CreateGraphs(const CubicSplineInterpolation& spline,const Config& config);
+    void CreateGraphs(const CubicSplineInterpolation& spline, const Config& config);
     void CreateInfo();
     void ModInfo(CubicSplineInterpolation& spline);
     void InitTabTask();
@@ -46,9 +48,8 @@ public:
     ~Widget();
 
 public slots:
-    void SaveAs(); 
+    void SaveAs();
     void SendDatabtnClick();
-
 
 private:
     Config config;
@@ -58,9 +59,10 @@ private:
     QLineEdit* InputXStart;
     QLineEdit* InputXEnd;
     QLineEdit* InputN;
+    QLineEdit* InputNC;
     QComboBox* InputTask;
     QPushButton* SendDatabtn;
-    
+
     QWidget* tab4GraphWidget;
     QChartView* chartView;
     QLineSeries* series;
@@ -81,8 +83,15 @@ private:
     QLineEdit* lineEdit_max2_x;
     QLineEdit* lineEdit_max3;
     QLineEdit* lineEdit_max3_x;
-    CubicSplineInterpolation Test;
-    CubicSplineInterpolation Main;
-    CubicSplineInterpolation Oscil;
+    CubicSplineInterpolation Spline;
+    std::function<double(double)> Func;
+    std::function<double(double)> dFunc;
+
+    double max1;
+    double max1_x;
+    double max2;
+    double max2_x;
+    double max3;
+    double max3_x;
 };
 #endif  // WIDGET_H

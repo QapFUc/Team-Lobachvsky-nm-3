@@ -15,9 +15,19 @@ CubicSpline::CubicSpline(const double& x, const double& a, const double& b, cons
     this->a = x;
 }
 
-double CubicSpline::operator()(const double& x) {
+double CubicSpline::operator()(const double& x) const {
     double y = x - a;
     return coefs[0] + coefs[1] * y + coefs[2] * y * y + coefs[3] * y * y * y;
+}
+
+double CubicSpline::get1stDerivative(const double& x) const {
+    double y = x - a;
+    return coefs[1] + 2.l * coefs[2] * y + 3.l * coefs[3] * y * y;
+}
+
+double CubicSpline::get2ndDerivative(const double& x) const {
+    double y = x - a;
+    return 2.l * coefs[2] + 6.l * coefs[3] * y;
 }
 
 CubicSplineInterpolation::CubicSplineInterpolation(std::vector<CubicSpline> splines, std::vector<double> points) {
@@ -165,7 +175,7 @@ CubicSplineInterpolation CubicSplineInterpolation::Interpolate(std::vector<doubl
     return CubicSplineInterpolation(splines, xs);
 }
 
-double CubicSplineInterpolation::operator()(const double& x) {
+double CubicSplineInterpolation::operator()(const double& x) const {
     for (size_t i = 0; i < splines.size(); ++i) {
         if (x >= points[i] && x <= points[i + 1]) {
             return splines[i](x);
