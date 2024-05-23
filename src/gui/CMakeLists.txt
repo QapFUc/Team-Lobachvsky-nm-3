@@ -1,11 +1,11 @@
 
-set( PROJECT_SOURCES
+set(PROJECT_SOURCES
     main.cpp
     widget.cpp
 )
 
 
-add_executable( gui.out
+add_executable(gui.out
                 ${PROJECT_SOURCES}
 )
 
@@ -27,3 +27,5 @@ endif()
 if(NOT ${X11} AND NOT ${MAC})
     target_link_libraries(gui.out PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::WaylandCompositor Qt${QT_VERSION_MAJOR}::Charts nm_spline_core spline::dtypes)
 endif()
+
+set_target_properties(gui.out PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
