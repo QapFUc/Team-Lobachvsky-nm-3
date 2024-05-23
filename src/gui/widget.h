@@ -24,6 +24,7 @@ public:
 
     void CreateTable1();
     void CreateTable2();
+    void CreateTable3();
     //void CreateGraphs();
     void CreateGraphs(CubicSplineInterpolation &spline);
     void CreateInfo();
@@ -42,6 +43,7 @@ private:
     QWidget* tab2;
     QWidget* tab3;
     QWidget* tab4;
+    QWidget* tab5;
     QLineEdit* lineEdit_n;
     QLineEdit* lineEdit_N;
     QLineEdit* lineEdit_max1;

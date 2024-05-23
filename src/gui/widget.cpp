@@ -43,9 +43,11 @@ Widget::Widget(QWidget* parent) : QWidget(parent) {
     tab2 = new QWidget();
     tab3 = new QWidget();
     tab4 = new QWidget();
+    tab5 = new QWidget();
 
     tabWidget->addTab(tab1, tr("Таблица 1"));
     tabWidget->addTab(tab2, tr("Таблица 2"));
+    tabWidget->addTab(tab5, tr("Талбица 3"));
     tabWidget->addTab(tab3, tr("График"));
     tabWidget->addTab(tab4, tr("Справка"));
 
@@ -62,11 +64,15 @@ Widget::Widget(QWidget* parent) : QWidget(parent) {
     tab3->setLayout(new QVBoxLayout());  //WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     tab3->layout()->addWidget(label3);
 
+    tab5->setLayout(new QVBoxLayout());
+
     CreateTable1();
     // table 1 is done.
 
     CreateTable2();
     // table 2 is done.
+
+    CreateTable3();
 
     //CreateGraphs();
     // widget 3
@@ -155,6 +161,38 @@ void Widget::CreateTable2() {
     }
 
     tab2->layout()->addWidget(table_2);
+}
+
+void Widget::CreateTable3() {
+    QTableWidget* table_3 = new QTableWidget(5, 4);
+
+    for (int row = 0; row < 5; ++row) {
+        for (int col = 0; col < 4; ++col) {
+            QTableWidgetItem* item = new QTableWidgetItem(QString("%1").arg(row * 7 + col + 1));
+            table_3->setItem(row, col, item);
+        }
+    }
+
+    table_3->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    for (int col = 0; col < 4; ++col) {
+        QTableWidgetItem* headerItem = new QTableWidgetItem();
+        if (col == 0) {
+            headerItem->setText("x(j)");
+        }
+        if (col == 1) {
+            headerItem->setText("F''(x_j)");
+        }
+        if (col == 2) {
+            headerItem->setText("S''(x_j)");
+        }
+        if (col == 3) {
+            headerItem->setText("F''(x_j) - S''(x_j)");
+        }
+        table_3->setHorizontalHeaderItem(col, headerItem);
+    }
+
+    tab5->layout()->addWidget(table_3);
 }
 
 // void Widget::CreateGraphs() {
