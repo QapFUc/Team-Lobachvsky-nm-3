@@ -54,6 +54,10 @@ public:
                                                 const double& rval);
     static CubicSplineInterpolation Interpolate(std::vector<double> xs, std::vector<double> values, const double& lval, const double& rval);
 
+
+    double get1stDerivative(const double&) const;
+    double get2ndDerivative(const double&) const;
+    
     const CubicSpline& getSpline(const size_t& i) const {
         return splines[i];
     }

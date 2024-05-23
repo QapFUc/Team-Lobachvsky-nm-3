@@ -35,6 +35,24 @@ CubicSplineInterpolation::CubicSplineInterpolation(std::vector<CubicSpline> spli
     this->points = points;
 }
 
+double CubicSplineInterpolation::get1stDerivative(const double& x) const {
+        for (size_t i = 0; i < splines.size(); ++i) {
+        if (x >= points[i] && x <= points[i + 1]) {
+            return splines[i].get1stDerivative(x);
+        }
+    }
+    return 0;
+}
+
+double CubicSplineInterpolation::get2ndDerivative(const double& x) const {
+        for (size_t i = 0; i < splines.size(); ++i) {
+        if (x >= points[i] && x <= points[i + 1]) {
+            return splines[i].get2ndDerivative(x);
+        }
+    }
+    return 0;
+}
+
 CubicSplineInterpolation CubicSplineInterpolation::Interpolate(const double& x_start,
                                                                const size_t& N,
                                                                const double& step,

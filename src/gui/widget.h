@@ -2,6 +2,8 @@
 
 #include <functional>
 #include <qlineedit.h>
+#include <qlineseries.h>
+#include <qwidget.h>
 #ifndef WIDGET_H
 #    define WIDGET_H
 
@@ -34,9 +36,11 @@ public:
 
     void CreateTable1();
     void CreateTable2();
-    //void CreateGraphs();
+    void CreateTable3();
+
     void InitGraphs();
     void CreateGraphs(const CubicSplineInterpolation& spline, const Config& config);
+    void InitInfo();
     void CreateInfo();
     void ModInfo(CubicSplineInterpolation& spline);
     void InitTabTask();
@@ -65,7 +69,8 @@ private:
 
     QWidget* tab4GraphWidget;
     QChartView* chartView;
-    QLineSeries* series;
+    QLineSeries* series_spline;
+    QLineSeries* series_func;
     QChart* chart;
     QValueAxis* axisX;
     QValueAxis* axisY;
@@ -75,6 +80,7 @@ private:
     QWidget* tab2;
     QWidget* tab3;
     QWidget* tab4;
+    QWidget* tab5;
     QLineEdit* lineEdit_n;
     QLineEdit* lineEdit_N;
     QLineEdit* lineEdit_max1;
@@ -86,6 +92,7 @@ private:
     CubicSplineInterpolation Spline;
     std::function<double(double)> Func;
     std::function<double(double)> dFunc;
+    std::function<double(double)> ddFunc;
 
     double max1;
     double max1_x;
